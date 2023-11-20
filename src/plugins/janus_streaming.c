@@ -1062,7 +1062,7 @@ static struct janus_json_parameter rtp_parameters[] = {
 	{"e2ee", JANUS_JSON_BOOL, 0},
 	{"playoutdelay_ext", JANUS_JSON_BOOL, 0},
 	{"abscapturetime_ext", JANUS_JSON_BOOL, 0},
-    {"abscapturetime_src_ext_id", JSON_INTEGER, JANUS_JSON_PARAM_POSITIVE}
+	{"abscapturetime_src_ext_id", JSON_INTEGER, JANUS_JSON_PARAM_POSITIVE}
 };
 static struct janus_json_parameter live_parameters[] = {
 	{"filename", JSON_STRING, JANUS_JSON_PARAM_REQUIRED},
@@ -3856,7 +3856,7 @@ static json_t *janus_streaming_process_synchronous_request(janus_streaming_sessi
 					e2ee ? json_is_true(e2ee) : FALSE,
 					pd ? json_is_true(pd) : FALSE,
 					abscaptime ? json_is_true(abscaptime) : FALSE,
-					abscaptime_src_id ? json_integer(abscaptime_src_id) : 0);
+					abscaptime_src_id ? json_integer_value(abscaptime_src_id) : 0);
 			janus_mutex_lock(&mountpoints_mutex);
 			g_hash_table_remove(mountpoints_temp, string_ids ? (gpointer)mpid_str : (gpointer)&mpid);
 			janus_mutex_unlock(&mountpoints_mutex);
@@ -4217,7 +4217,7 @@ static json_t *janus_streaming_process_synchronous_request(janus_streaming_sessi
 				if(source->abscapturetime_ext && source->abscapturetime_src_ext_id > 0) {
 					janus_config_add(config, c, janus_config_item_create("abscapturetime_ext", "true"));
 					g_snprintf(value, BUFSIZ, "%d", source->abscapturetime_src_ext_id);
-		        	janus_config_add(config, c, janus_config_item_create("abscapturetime_src_ext_id", value));
+					janus_config_add(config, c, janus_config_item_create("abscapturetime_src_ext_id", value));
 				}
 				/* Iterate on all media streams */
 				janus_config_array *media = janus_config_array_create("media");
